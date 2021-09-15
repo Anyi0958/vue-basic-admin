@@ -1,7 +1,7 @@
 /*
  * @Author: ay
  * @Date: 2021-09-14 14:34:02
- * @LastEditTime: 2021-09-14 18:43:23
+ * @LastEditTime: 2021-09-15 14:09:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-basic-admin\vue.config.js
@@ -25,6 +25,18 @@ module.exports = {
     i18n: {
       localeDir: "locales",
       enableInSFC: false,
+    },
+  },
+  /*  
+    解决 antDesign less  
+    .bezierEasingMixin();
+    ^
+    Inline JavaScript is not enabled. Is it set in your options? */
+  css: {
+    loaderOptions: {
+      less: {
+        javascriptEnabled: true,
+      },
     },
   },
 };

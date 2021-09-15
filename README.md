@@ -9,11 +9,22 @@
 
 1.  基于 Vue2、Vue CLI 4、Vue Router、Vuex
 2.  使用 Vue 官方建议的 Axios 插件进行 HTTP 操作
-3.  采用 UI 组件库 iView element
+3.  采用 UI 组件库 iView elementUI antDesign
 4.  通过 Mock.js 插件拦截 Ajax 请求并生成随机数据
 5.  通过 plop 实现前端自动化
 
 # 开发构建
+
+### antDesign UI组件相关文件及配置
+ 
+ 相关依赖 :arrow_right:  ant-design-vue less@^3.0.4 less-loader@^5.0.0 babel-plugin-import
+ 相关文件 :arrow_right:  layouts/antDesign layouts/index.js babel.config.js
+
+### elementUI UI组件相关文件及配置
+ 
+ 相关依赖 :arrow_right:  element-ui babel-plugin-component
+ 相关文件 :arrow_right:  layouts/elementUI layouts/index.js babel.config.js
+
 
 ### 目录结构
 

@@ -1,7 +1,7 @@
 /*
  * @Author: ay
  * @Date: 2021-09-14 15:03:37
- * @LastEditTime: 2021-09-14 18:32:37
+ * @LastEditTime: 2021-09-15 13:13:53
  * @LastEditors: Please set LastEditors
  * @Description: 国际化语言
  * @FilePath: \vue-basic-admin\src\config\index.js
@@ -9,7 +9,7 @@
 
 import Vue from "vue";
 import VueI18n from "vue-i18n";
-import defaultSettings from "@/config";
+const defaultSettings = require("@/config");
 Vue.use(VueI18n);
 
 // 自动获取 locales 下的文件

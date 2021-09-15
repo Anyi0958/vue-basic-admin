@@ -8,7 +8,7 @@ const routes = [
     path: "/",
     redirect: "Home",
     component: () =>
-      import(/* webpackChunkName: "index" */ "@/views/layouts/index.vue"),
+      import(/* webpackChunkName: "index" */ "@/layouts/index.vue"),
     children: [
       // 首页
       {
