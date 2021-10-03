@@ -1,15 +1,21 @@
-// 自动获取 zh 下的文件
-function loadLocaleMessages() {
-  const locales = require.context("./zh", true, /[A-Za-z0-9-_,\s]+\.js$/i);
-  let messages = {};
-  locales.keys().forEach((key) => {
-    messages = { ...messages, ...locales(key).default };
-  });
-  return messages;
-}
+import zhLocale from "element-ui/lib/locale/lang/zh-CN";
+import zhCN from "ant-design-vue/lib/locale-provider/zh_CN";
+
+const APP = {
+  "app.lang": "中文",
+  "app.message": "消息 !!22",
+};
+
+const REQUEST = {
+  "request.success": "请求成功",
+  "request.error": "请求异常",
+  "request.noPermissionCode": "暂无权限",
+  "request.invalidCode": "登录失效",
+};
 
 export default {
-  ...loadLocaleMessages(),
-  lang: "中文",
-  message: "消息 !!22",
+  ...zhLocale,
+  ...zhCN,
+  ...APP,
+  ...REQUEST,
 };

@@ -7,6 +7,8 @@ import i18n from "./lang";
 import "./components";
 // 样式重置 跨浏览器的高度一致性
 import "normalize.css/normalize.css";
+// 本地模拟网络数据
+require("./mock");
 Vue.config.productionTip = false;
 
 new Vue({

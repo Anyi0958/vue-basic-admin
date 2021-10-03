@@ -1,7 +1,7 @@
 /*
  * @Author: ay
  * @Date: 2021-09-15 11:34:17
- * @LastEditTime: 2021-09-15 15:03:39
+ * @LastEditTime: 2021-09-30 16:13:33
  * @LastEditors: Please set LastEditors
  * @Description: elementUI 按需加载
  */
@@ -169,3 +169,19 @@ Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$alert = MessageBox.alert;
+
+/** 网络请求 消息提示
+ * @param {String} content    提示内容  string
+ * @param {Number} duration  自动关闭的延时，单位秒。设为 0 时不自动关闭。
+ * @param {String} type      类型  success/warning/info/error
+ */
+
+export const AnMessages = function (obj) {
+  let isNumber = Object.prototype.toString.call(obj).slice(8, -1) === "Number";
+  let config = {
+    type: obj.type,
+    message: obj.content,
+    duration: isNumber ? obj.duration * 1000 : 3000,
+  };
+  return Message(config);
+};

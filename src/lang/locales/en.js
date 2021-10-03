@@ -1,15 +1,21 @@
-// 自动获取 en 下的文件
-function loadLocaleMessages() {
-  const locales = require.context("./en", true, /[A-Za-z0-9-_,\s]+\.js$/i);
-  let messages = {};
-  locales.keys().forEach((key) => {
-    messages = { ...messages, ...locales(key).default };
-  });
-  return messages;
-}
+import enLocale from "element-ui/lib/locale/lang/en";
+import en_GB from "ant-design-vue/lib/locale-provider/en_GB";
 
-export default {
-  ...loadLocaleMessages(),
+const APP = {
   lang: "English",
   message: "hello i18n !2131!",
+};
+
+const REQUEST = {
+  "request.success": "Request succeeded",
+  "request.error": "Request exception",
+  "request.noPermissionCode": "No permission",
+  "request.invalidCode": "Login invalid",
+};
+
+export default {
+  ...enLocale,
+  ...en_GB,
+  ...APP,
+  ...REQUEST,
 };

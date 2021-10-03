@@ -14,17 +14,17 @@ const HeaderBar = require(`./${defaultSettings.layoutUI}/HeaderBar`).default;
 const SetBtn = require(`./${defaultSettings.layoutUI}/SetBtn`).default;
 const SideBar = require(`./${defaultSettings.layoutUI}/SideBar`).default;
 const TagsBar = require(`./${defaultSettings.layoutUI}/TagsBar`).default;
-
+let AnMessages = null;
 switch (defaultSettings.layoutUI) {
   case "antDesign":
-    require("./antDesign/lazy_use");
+    AnMessages = require("./antDesign/lazy_use").AnMessages;
     break;
   case "elementUI":
-    require("./elementUI/lazy_use");
+    AnMessages = require("./elementUI/lazy_use").AnMessages;
     break;
 
   default:
     break;
 }
 
-module.exports = { FooterBar, HeaderBar, SetBtn, SideBar, TagsBar };
+module.exports = { FooterBar, HeaderBar, SetBtn, SideBar, TagsBar, AnMessages };

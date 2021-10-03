@@ -1,7 +1,7 @@
 /*
  * @Author: ay
  * @Date: 2021-09-15 11:34:17
- * @LastEditTime: 2021-09-15 15:03:38
+ * @LastEditTime: 2021-09-30 16:13:31
  * @LastEditors: Please set LastEditors
  * @Description: antDesign 按需加载
  */
@@ -105,3 +105,18 @@ Vue.prototype.$info = Modal.info;
 Vue.prototype.$success = Modal.success;
 Vue.prototype.$error = Modal.error;
 Vue.prototype.$warning = Modal.warning;
+
+/** 网络请求 消息提示
+ * @param {String} content    提示内容  string
+ * @param {Number} duration  自动关闭的延时，单位秒。设为 0 时不自动关闭。
+ * @param {String} type      类型  success/warning/info/error
+ */
+
+export const AnMessages = function (obj) {
+  let isNumber = Object.prototype.toString.call(obj).slice(8, -1) === "Number";
+  let config = {
+    content: obj.content,
+    duration: isNumber ? obj.duration : 3,
+  };
+  return message[obj.type](config);
+};
