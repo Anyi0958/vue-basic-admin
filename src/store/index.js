@@ -1,10 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import getters from "./getters";
-import actions from "./actions";
-import mutations from "./mutations";
-
 Vue.use(Vuex);
 
 // 导入所有 vuex 模块，自动加入namespaced:true，用于解决vuex命名冲突。
@@ -43,9 +39,6 @@ const store = new Vuex.Store({
     // 测试数据
     AyVueAdmin: "root-AyVueAdmin",
   },
-  getters,
-  mutations,
-  actions,
   modules,
   // 严格模式
   strict: process.env.NODE_ENV !== "production",

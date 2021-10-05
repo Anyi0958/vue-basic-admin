@@ -107,7 +107,7 @@ Vue.prototype.$error = Modal.error;
 Vue.prototype.$warning = Modal.warning;
 
 /** 网络请求 消息提示
- * @param {String} content    提示内容  string
+ * @param {String} message    提示内容  string
  * @param {Number} duration  自动关闭的延时，单位秒。设为 0 时不自动关闭。
  * @param {String} type      类型  success/warning/info/error
  */
@@ -115,7 +115,7 @@ Vue.prototype.$warning = Modal.warning;
 export const AnMessages = function (obj) {
   let isNumber = Object.prototype.toString.call(obj).slice(8, -1) === "Number";
   let config = {
-    content: obj.content,
+    content: obj.message,
     duration: isNumber ? obj.duration : 3,
   };
   return message[obj.type](config);

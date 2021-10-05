@@ -1,7 +1,7 @@
 /*
  * @Author: ay
  * @Date: 2021-09-30 14:47:51
- * @LastEditTime: 2021-09-30 17:59:09
+ * @LastEditTime: 2021-10-05 21:12:09
  * @LastEditors: Please set LastEditors
  * @Description: 网络请求
  * @FilePath: \vue-basic-admin\src\utils\request.js
@@ -17,13 +17,13 @@ import {
   requestDataType,
   requestBase,
   requestErrorCode,
-} from "@config";
+} from "@/config";
 
 // 消息提示
 const AnMessages = require("@/layouts/layouts.js").AnMessages;
-const $_Message = function ({ type = "success", content }) {
+const $_Message = function ({ type = "success", message }) {
   return AnMessages({
-    content,
+    message,
     type,
   });
 };
@@ -38,10 +38,9 @@ axios.interceptors.request.use(
 
     // 设置请求数据类型
     config.headers["Content-Type"] = requestDataType[config.DataType];
-
     // 是否需要登录凭证
     if (config.HasToken) {
-      config.headers[tokenName] = store.getters.token;
+      config.headers[tokenName] = store.state.user.token;
     }
 
     // 删除工具属性
@@ -78,10 +77,14 @@ axios.interceptors.response.use(
     const Data = response.data;
     const Code = Data.code;
     // 根据返回的code值来做不同的处理(和后端约定)
-    const ErrorCodes = Object.keys(requestErrorCode) || [];
-    if (ErrorCodes.includes(Code)) {
+    if (Code !== 200) {
+      const message =
+        Data.message ||
+        (requestErrorCode[Code]
+          ? i18n.t(`request.${requestErrorCode[Code]}`)
+          : "未知错误");
       $_Message({
-        message: i18n.t(`request.${requestErrorCode[Code]}`),
+        message,
         type: "error",
       });
     }
@@ -128,9 +131,6 @@ export const request = ({
   DataType = "json",
   HasToken = true,
 }) => {
-  // eslint-disable-next-line no-undef
-  console.log(" --------- axios 接收参数  ---------", arguments);
-
   return axios({
     DataType: DataType.toLowerCase(),
     HasToken: HasToken,

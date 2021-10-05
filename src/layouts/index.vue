@@ -1,7 +1,7 @@
 <!--
  * @Author: ay
  * @Date: 2021-09-14 18:29:02
- * @LastEditTime: 2021-09-30 16:10:07
+ * @LastEditTime: 2021-10-05 18:28:27
  * @LastEditors: Please set LastEditors
  * @Description: 自定义布局
  * @FilePath: \vue-basic-admin\src\views\layouts\index.vue
@@ -41,9 +41,21 @@
 
 <script>
 let layout = require("./layouts");
+import { mapActions } from "vuex";
 export default {
   name: "layouts",
   components: { ...layout },
+  methods: {
+    ...mapActions({
+      UserLogin: "user/Login",
+    }),
+  },
+  mounted() {
+    this.UserLogin({
+      username: "admin",
+      password: "admin",
+    });
+  },
 };
 </script>
 

@@ -1,23 +1,26 @@
 /*
  * @Author: ay
  * @Date: 2021-09-30 14:15:31
- * @LastEditTime: 2021-09-30 17:23:54
+ * @LastEditTime: 2021-10-05 21:25:30
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-basic-admin\src\store\modules\user.js
  */
-
+import { UserLogin, UserInfo } from "@/api/user";
+// eslint-disable-next-line no-unused-vars
+import { setStore, getStore, removeStore, clearStore } from "@/utils/storage";
+import { tokenName } from "@/config";
 const user = {
   state: {
-    token: "xxxxxxx",
+    token: getStore(tokenName),
     // 用户名
-    nickName: "anitt",
+    nickName: "",
     // 头像
-    avatar: "https://api.ixiaowai.cn/mcapi/mcapi.php",
+    avatar: "",
     // 角色
-    roles: ["admin", "user", "test"],
+    roles: [],
     // 权限
-    permissions: ["add", "delete", "edit"],
+    permissions: [],
   },
   getters: {},
   mutations: {
@@ -39,44 +42,52 @@ const user = {
   },
   actions: {
     // 用户登录
-    Login({ commit }, userInfo) {
-      const username = userInfo.username.trim();
+    Login({ commit, dispatch }, userInfo) {
+      const username = userInfo.username ? userInfo.username.trim() : "";
       const password = userInfo.password;
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          if (username === "admin" && password === "123456") {
-          } else {
-            reject("帐户或密码不正确!");
-          }
-        }, 1000);
+        UserLogin({
+          username,
+          password,
+        })
+          .then((res) => {
+            if (res.code === 200 && res.success) {
+              // 本地存储 token
+              setStore(tokenName, res.result);
+              commit("SET_TOKEN", res.result);
+              // 获取用户基本信息
+              dispatch("GetInfo");
+            }
+            resolve(res);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
     },
     // 获取用户信息
-    GetInfo({ commit, state }) {
+    GetInfo({ commit }) {
       return new Promise((resolve, reject) => {
-        api.routers
-          .getInfo()
+        UserInfo()
           .then((res) => {
-            const user = res.data.user;
-            const avatar = "";
-            if (res.data.roles && res.data.roles.length > 0) {
-              // 验证返回的roles是否是一个非空数组
-              commit("SET_ROLES", res.data.roles);
-              commit("SET_PERMISSIONS", res.data.permissions);
-            } else {
-              commit("SET_ROLES", ["ROLE_DEFAULT"]);
+            if (res.code === 200 && res.success) {
+              const user = res.result;
+              commit("SET_NICKNAME", user.nickName);
+              commit("SET_AVATAR", user.avatar);
+              commit("SET_ROLES", user.roles || []);
+              commit("SET_PERMISSIONS", user.permissions || []);
             }
-            commit("SET_NAME", user.userName);
-            commit("SET_NICKNAME", user.nickName);
-            commit("SET_EMAIL", user.email);
-
-            commit("SET_AVATAR", avatar);
             resolve(res);
           })
           .catch((error) => {
             reject(error);
           });
       });
+    },
+    // 用户登出
+    Logout({ commit }) {
+      commit("SET_TOKEN", "");
+      removeStore(tokenName);
     },
   },
 };
