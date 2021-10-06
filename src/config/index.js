@@ -1,7 +1,7 @@
 /*
  * @Author: ay
  * @Date: 2021-09-14 15:03:37
- * @LastEditTime: 2021-10-05 17:35:54
+ * @LastEditTime: 2021-10-06 12:39:31
  * @LastEditors: Please set LastEditors
  * @Description: 全局配置
  * @FilePath: \vue-basic-admin\src\config\index.js
@@ -14,6 +14,17 @@ module.exports = {
   production:
     process.env.NODE_ENV === "production" &&
     process.env.VUE_APP_PREVIEW !== "true", // 当前环境
+
+  // 加载进度条
+  nprogressConfig: {
+    // 动画设置
+    easing: "ease",
+    // 动画速度
+    speed: 500,
+    trickleSpeed: 200,
+    // 进度环显示隐藏
+    showSpinner: false,
+  },
 
   // request
   //  缓存 token 建

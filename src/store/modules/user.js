@@ -1,14 +1,13 @@
 /*
  * @Author: ay
  * @Date: 2021-09-30 14:15:31
- * @LastEditTime: 2021-10-05 21:25:30
+ * @LastEditTime: 2021-10-06 13:21:46
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-basic-admin\src\store\modules\user.js
  */
 import { UserLogin, UserInfo } from "@/api/user";
-// eslint-disable-next-line no-unused-vars
-import { setStore, getStore, removeStore, clearStore } from "@/utils/storage";
+import { setStore, getStore, removeStore } from "@/utils/storage";
 import { tokenName } from "@/config";
 const user = {
   state: {

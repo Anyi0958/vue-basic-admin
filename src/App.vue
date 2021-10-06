@@ -11,4 +11,8 @@ body,
   height: 100%;
   overflow: hidden;
 }
+/* 自定义进度条颜色 */
+#nprogress .bar {
+  background: red !important;
+}
 </style>

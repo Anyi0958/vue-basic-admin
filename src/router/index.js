@@ -1,17 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import store from "@/store";
-// import { getStore } from "@/libs/storage";
-// import { tokenName } from "@/config";
+import store from "@/store";
+import { getStore } from "@/utils/storage";
+import { tokenName, nprogressConfig } from "@/config";
 // 加载进度条
 import nprogress from "nprogress";
 import "nprogress/nprogress.css";
-nprogress.configure({
-  easing: "ease",
-  speed: 500,
-  trickleSpeed: 200,
-  showSpinner: false,
-});
+nprogress.configure({ ...nprogressConfig });
 
 Vue.use(VueRouter);
 
@@ -40,42 +35,43 @@ const router = new VueRouter({
 
 export default router;
 
+// 路由白名单
+const whiteList = ["/login"];
+
 router.beforeEach((to, from, next) => {
   nprogress.start();
-  console.log(router.app, to.name, to.params, to.query);
-  next();
-  // Util.title(to.meta.title);
-  // var name = to.name;
-  // if (Cookies.get('locking') == '1' && name !== 'locking') {
-  //     // 判断当前是否是锁定状态
-  //     next({
-  //         replace: true,
-  //         name: 'locking'
-  //     });
-  // } else if (Cookies.get('locking') == '0' && name == 'locking') {
-  //     next(false);
-  // } else {
-  //     // 白名单
-  //     var whiteList = name != 'login' && name != 'regist' && name != 'regist-result' && name != 'authorize';
-  //     if (!Cookies.get('userInfo') && whiteList) {
-  //         // 判断是否已经登录且前往的页面不是登录页
-  //         next({
-  //             name: 'login'
-  //         });
-  //     } else if (Cookies.get('userInfo') && name == 'login') {
-  //         // 判断是否已经登录且前往的是登录页
-  //         Util.title();
-  //         next({
-  //             name: 'home_index'
-  //         });
-  //     } else {
-  //         Util.toDefaultPage([...routers], name, router, next);
-  //     }
-  // }
+  const token = getStore(tokenName);
+  // 是否有token
+  if (token) {
+    if (to.path === "/login") {
+      next({ path: "/home" });
+      nprogress.done();
+    } else {
+      if (store.state.user.roles.length === 0) {
+        // 判断当前用户是否已拉取完user_info信息
+        store.dispatch("user/GetInfo").then(() => {
+          store.dispatch("app/GetRoutes").then((accessRoutes) => {
+            // 根据roles权限生成可访问的路由表
+            router.addRoutes(accessRoutes); // 动态添加可访问路由表
+            next({ ...to, replace: true }); // hack方法 确保addRoutes已完成
+          });
+        });
+      } else {
+        next();
+      }
+    }
+  } else {
+    if (whiteList.includes(to.path)) {
+      next();
+    } else {
+      next(`/login?redirect=${to.fullPath}`); // 否则全部重定向到登录页
+      nprogress.done();
+    }
+  }
 });
 
 router.afterEach((to) => {
-  console.log(router.app, to.name, to.params, to.query);
+  console.log("=====路由后置=====", router.app, to.name, to.params, to.query);
   nprogress.done();
   window.scrollTo(0, 0);
 });
