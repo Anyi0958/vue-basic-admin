@@ -1,7 +1,7 @@
 /*
  * @Author: ay
  * @Date: 2021-09-30 14:11:42
- * @LastEditTime: 2021-10-06 15:54:04
+ * @LastEditTime: 2021-11-25 14:41:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-basic-admin\src\store\modules\app.js
@@ -9,9 +9,10 @@
 
 import { GenerateRoutes } from "@/utils/app";
 import { getMenuList } from "@/api/app";
-
+import { title } from "@/config";
 const app = {
   state: {
+    title,
     menu: [],
   },
   getters: {},

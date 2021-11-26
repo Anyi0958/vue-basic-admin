@@ -1,7 +1,7 @@
 /*
  * @Author: ay
  * @Date: 2021-09-30 14:47:51
- * @LastEditTime: 2021-10-05 21:12:09
+ * @LastEditTime: 2021-11-25 16:15:01
  * @LastEditors: Please set LastEditors
  * @Description: 网络请求
  * @FilePath: \vue-basic-admin\src\utils\request.js
@@ -127,7 +127,6 @@ export const request = ({
   method = "get",
   url,
   params,
-
   DataType = "json",
   HasToken = true,
 }) => {

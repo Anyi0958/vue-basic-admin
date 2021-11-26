@@ -1,7 +1,7 @@
 /*
  * @Author: ay
  * @Date: 2021-10-03 22:02:29
- * @LastEditTime: 2021-10-05 21:25:25
+ * @LastEditTime: 2021-11-25 13:48:29
  * @LastEditors: Please set LastEditors
  * @Description: 用户相关api
  * @FilePath: \vue-basic-admin\mock\user.js
@@ -45,7 +45,6 @@ let UserInfo = function () {
       permissions: ["add", "delete", "edit"],
     },
   };
-  // }
 };
 export default {
   "post|/login": UserLogin,
